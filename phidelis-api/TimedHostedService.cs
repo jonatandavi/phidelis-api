@@ -68,6 +68,18 @@ public class TimedHostedService : IHostedService
         Console.WriteLine(
             "Timed Hosted Service is working. Count: {0}", count);
 
+        if(count == 1000)
+        {
+            SqliteConnection sqliteConnection = new SqliteConnection("Data Source=Phidelis.db");
+            sqliteConnection.Open();
+            string cmd = @"DELETE from Students";
+            SqliteCommand sQLiteCommand = new SqliteCommand(cmd, sqliteConnection);
+            sQLiteCommand.ExecuteScalar();
+            sqliteConnection.Close();
+
+            executionCount = 0;
+        }
+
         GenerateRegistrarion();
     }
 
